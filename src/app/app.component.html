@@ -1,21 +1,69 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3" id="task">
+              <h1 id="title">{{title}}</h1>
 
+            <div class="input-group" >
+                <input id="inputTask" #spy name="task" placeHolder="Add new task..." (keyup.enter)="addTask(taskText)" [(ngModel)]="taskText" class="form-control" required/>
+                  
+                <span class="input-group-addon">
+                 <button (click)="addTask(taskText)"  class="btn btn-md  btn-primary" > <span  class="glyphicon glyphicon-plus" aria-hidden="true" alt="Add"></span> Add </button>
+                  <button (click)="reset()" class="btn btn-md btn-primary">clear</button>
+                 
+                </span>
+            </div>
+            
+            <div *ngIf="errMsg">
+                   <p id="errMessage"><strong> Sorry , Task is not added ! Please add task </strong>
+                      <span id="errButton">
+                           <button class="btn btn-default btn-xs" (click)="dismiss()" >Clear Message</button>
+                           <button class="btn btn-info btn-xs" (click)="addAnyWay(taskText)" >Add Task</button>
+                      </span>
+                   </p>
+                   
+            </div>
+           
+             
+              <div *ngIf="Tasks">
+                 <h4  id="ttcTitle" >Task-to-do  <span class="badge "  style="background-color:rgb(51, 102, 153)">{{totalTaskToComplete}}</span></h4><hr />
+                     <ul class="list-group">
+                        
+                         <li  *ngFor="let task of Tasks" class="list-group-item taskToComplete"> 
+                             <span class="dateTime">{{task.timeStamp |date}} {{task.timeStamp| date:''}}</span> 
+                           
+                            <span class="list-group-addon ctrlButtons " >
+                                <button (click)="markAsComplete(task)" class="btn btn-xs btn-success">completed</button>
+                                <button (click)="editTask(task)" class="btn btn-xs btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>Edit</button>
+                                <button (click)="deleteTask(task)" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
+                            </span><br />
+                            {{task.name}}
+                         </li>  
+                     </ul>
+              </div>  
+              
+             
+
+
+             
+
+              <div *ngIf="dTask">
+                <h4 style="color:rgb(0, 153, 153)">Completed-task  <span class="badge"  style="background-color:rgb(0, 153, 153)">{{completedTask}}</span></h4><hr/>
+                <ul class="list-group">
+                  <li  *ngFor="let task of dTask" class="list-group-item colmpletedTask"> 
+                     <span class="dateTime">Completed on:{{task.timeStamp |date}} {{task.timeStamp | date:''}}</span>
+                   
+                     <span class="list-group-addon" style="float:right">
+                       <button (click)="deleteDTask(task)" class="btn btn-xs btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete</button>
+                     </span><br />
+                      {{task.name}}
+                   
+                  </li>
+                </ul>
+              </div>
+                
+      </div>       
+
+    </div>
+
+</div>
 <router-outlet></router-outlet>
